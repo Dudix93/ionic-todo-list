@@ -7,8 +7,36 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-grid>
+      <ion-row class="bar">
+        <ion-col col-4>Task name</ion-col>
+        <ion-col col-4>Priority</ion-col>
+        <ion-col col-4>Done</ion-col>
+      </ion-row>
+      <ion-row *ngFor="let item of todo; let i = index" class="content">
+        <ion-col col-4 *ngIf="i < rowsPerPage">{{item['task_name']}}</ion-col>
+        <ion-col col-4 *ngIf="i < rowsPerPage">{{item['priority']}}</ion-col>
+        <ion-col col-4 *ngIf="i < rowsPerPage"><ion-checkbox [(ngModel)]="item['done']" name="item['task_name']"></ion-checkbox></ion-col>
+      </ion-row>
+  </ion-grid>
+
+  <ion-item>
+    <ion-label>Rows per page:</ion-label>
+    <ion-select [(ngModel)]="rowsPerPage">
+      <ion-option *ngFor="let rpp of rowsPerPageList" value="{{rpp.value}}">{{rpp.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Add new task</ion-label>
+    <ion-input type="text" name="newTask" [(ngModel)]="new_task" clearInput></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Priority</ion-label>
+    <ion-select [(ngModel)]="selectedPriority">
+      <ion-option *ngFor="let pr of priorityList" value="{{pr.value}}">{{pr.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <button ion-button (click)="addNewTask()">Add task</button>
 </ion-content>
