@@ -19,14 +19,14 @@
           Task name <ion-icon name="md-trending-down"></ion-icon>
         </ion-col>
 
-        <ion-col col-4 *ngIf="(currentColSorted == '' && currentSorting == '') || (currentColSorted != 'priority' && currentSorting != '')" (click)="sortList('priority')">
+        <ion-col col-4 *ngIf="(currentColSorted == '' && currentSorting == '') || (currentColSorted != 'priority_value' && currentSorting != '')" (click)="sortList('priority_value')">
           Priority
         </ion-col>
-        <ion-col class="sort" col-4 *ngIf="currentColSorted == 'priority' && currentSorting == 'asc'" (click)="sortList('priority')">
-          Priority <ion-icon name="md-trending-down"></ion-icon>
-        </ion-col>
-        <ion-col class="sort" col-4 *ngIf="currentColSorted == 'priority' && currentSorting == 'desc'" (click)="sortList('priority')">
+        <ion-col class="sort" col-4 *ngIf="currentColSorted == 'priority_value' && currentSorting == 'asc'" (click)="sortList('priority_value')">
           Priority <ion-icon name="md-trending-up"></ion-icon>
+        </ion-col>
+        <ion-col class="sort" col-4 *ngIf="currentColSorted == 'priority_value' && currentSorting == 'desc'" (click)="sortList('priority_value')">
+          Priority <ion-icon name="md-trending-down"></ion-icon>
         </ion-col>
 
         <ion-col col-4 *ngIf="(currentColSorted == '' && currentSorting == '') || (currentColSorted != 'done' && currentSorting != '')" (click)="sortList('done')">
@@ -40,15 +40,23 @@
       </ion-row>
 
       <ion-row *ngFor="let item of todo; let i = index" class="content">
-        <ion-col col-4 *ngIf="i < rowsPerPage">{{item['task_name']}}</ion-col>
-        <ion-col col-4 *ngIf="i < rowsPerPage">{{item['priority']}}</ion-col>
-        <ion-col col-4 *ngIf="i < rowsPerPage"><ion-checkbox [(ngModel)]="item['done']" name="item['task_name']"></ion-checkbox></ion-col>
+        <ion-col col-4 *ngIf="i >= firstDisplayedIndex-1 && i <= lastDisplayedIndex-1">{{item['task_name']}}</ion-col>
+        <ion-col col-4 *ngIf="i >= firstDisplayedIndex-1 && i <= lastDisplayedIndex-1">{{item['priority']}}</ion-col>
+        <ion-col col-4 *ngIf="i >= firstDisplayedIndex-1 && i <= lastDisplayedIndex-1"><ion-checkbox [(ngModel)]="item['done']" name="item['task_name']"></ion-checkbox></ion-col>
       </ion-row>
   </ion-grid>
 
   <ion-item>
+      {{firstDisplayedIndex}} - {{lastDisplayedIndex}} of {{todo.length}}
+      <ion-icon name="ios-arrow-back" *ngIf="currentPage == 1" disabled> </ion-icon>
+      <ion-icon name="ios-arrow-back" *ngIf="currentPage != 1" (click)="prevPage()"> </ion-icon>
+      <ion-icon name="ios-arrow-forward" *ngIf="currentPage == pages" disabled></ion-icon>
+      <ion-icon name="ios-arrow-forward" *ngIf="currentPage != pages" (click)="nextPage()"></ion-icon>
+  </ion-item>
+
+  <ion-item>
     <ion-label>Rows per page:</ion-label>
-    <ion-select [(ngModel)]="rowsPerPage">
+    <ion-select [(ngModel)]="rowsPerPage" (ngModelChange)="updatePages()">
       <ion-option *ngFor="let rpp of rowsPerPageList" value="{{rpp.value}}">{{rpp.name}}</ion-option>
     </ion-select>
   </ion-item>
