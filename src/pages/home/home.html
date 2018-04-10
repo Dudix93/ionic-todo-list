@@ -1,21 +1,13 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content padding>
   <ion-grid>
       <ion-row class="bar">
-        <ion-col col-7 *ngIf="(currentColSorted == '' && currentSorting == '') || (currentColSorted != 'task_name' && currentSorting != '')" (click)="sortList('task_name')">
+        <ion-col col-6 *ngIf="(currentColSorted == '' && currentSorting == '') || (currentColSorted != 'task_name' && currentSorting != '')" (click)="sortList('task_name')">
           Task name
         </ion-col>
-        <ion-col class="sort" col-7 *ngIf="currentColSorted == 'task_name' && currentSorting == 'asc'" (click)="sortList('task_name')">
+        <ion-col class="sort" col-6 *ngIf="currentColSorted == 'task_name' && currentSorting == 'asc'" (click)="sortList('task_name')">
           Task name <ion-icon name="md-trending-up"></ion-icon>
         </ion-col>
-        <ion-col class="sort" col-7 *ngIf="currentColSorted == 'task_name' && currentSorting == 'desc'" (click)="sortList('task_name')">
+        <ion-col class="sort" col-6 *ngIf="currentColSorted == 'task_name' && currentSorting == 'desc'" (click)="sortList('task_name')">
           Task name <ion-icon name="md-trending-down"></ion-icon>
         </ion-col>
 
@@ -29,22 +21,31 @@
           Priority <ion-icon name="md-trending-down"></ion-icon>
         </ion-col>
 
-        <ion-col col-2 *ngIf="(currentColSorted == '' && currentSorting == '') || (currentColSorted != 'done' && currentSorting != '')" (click)="sortList('done')">
-          Done</ion-col>
-        <ion-col class="sort" col-2 *ngIf="currentColSorted == 'done' && currentSorting == 'asc'" (click)="sortList('done')">
+        <ion-col col-3 *ngIf="(currentColSorted == '' && currentSorting == '') || (currentColSorted != 'done' && currentSorting != '')" (click)="sortList('done')">
+          Done
+        </ion-col>
+        <ion-col class="sort" col-3 *ngIf="currentColSorted == 'done' && currentSorting == 'asc'" (click)="sortList('done')">
           Done <ion-icon name="ios-create-outline"></ion-icon>
         </ion-col>
-        <ion-col class="sort" col-2 *ngIf="currentColSorted == 'done' && currentSorting == 'desc'" (click)="sortList('done')">
+        <ion-col class="sort" col-3 *ngIf="currentColSorted == 'done' && currentSorting == 'desc'" (click)="sortList('done')">
           Done <ion-icon name="ios-create"></ion-icon>
         </ion-col>
       </ion-row>
 
       <ng-container *ngFor="let item of todo; let i = index">
-          <ion-row *ngIf="i >= firstDisplayedIndex-1 && i <= lastDisplayedIndex-1" class="content">
-            <ion-col col-7>{{item['task_name']}}</ion-col>
+          <ion-row *ngIf="i >= firstDisplayedIndex-1 && i <= lastDisplayedIndex-1 && toDelete != i" (click)="showBin(i)" class="content">
+            <ion-col col-6>{{item['task_name']}}</ion-col>
             <ion-col col-3>{{item['priority']}}</ion-col>
             <ion-col col-2><ion-checkbox [(ngModel)]="item['done']" name="item['task_name']"></ion-checkbox></ion-col>
+            <ion-col col-1><ion-icon name="ios-trash-outline" *ngIf="bin == true && toDelete == i"></ion-icon></ion-col>
           </ion-row>
+
+            <ion-row *ngIf="i >= firstDisplayedIndex-1 && i <= lastDisplayedIndex-1 && toDelete == i" (click)="showBin(i)" class="highlight">
+              <ion-col col-6>{{item['task_name']}}</ion-col>
+              <ion-col col-3>{{item['priority']}}</ion-col>
+              <ion-col col-2><ion-checkbox [(ngModel)]="item['done']" name="item['task_name']"></ion-checkbox></ion-col>
+              <ion-col col-1><ion-icon name="ios-trash-outline" *ngIf="bin == true && toDelete == i"></ion-icon></ion-col>
+            </ion-row>
       </ng-container>
   </ion-grid>
 

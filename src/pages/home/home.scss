@@ -10,6 +10,10 @@ page-home {
         color:#ffffff;
     }
 
+    .highlight{
+        background-color: #f0ebe9;
+    }
+
     .content{
         border-color:gray;
         border-style: solid;
@@ -18,5 +22,9 @@ page-home {
 
     .col{
         padding:3%;
+    }
+
+    ion-icon{
+        font-size:18px;
     }
 }

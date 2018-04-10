@@ -7,6 +7,8 @@ import { NavController, ToastController } from 'ionic-angular';
 })
 export class HomePage {
   
+  bin:boolean = false;
+
   new_task:String = '';
   currentSorting:String = '';
   currentColSorted:String = '';
@@ -35,6 +37,7 @@ export class HomePage {
     
   pagesList:Array<number> = [];
   
+  toDelete:number = null;
   rowsPerPage:number = 5;
   firstDisplayedIndex:number = 1;
   lastDisplayedIndex:number = 5;
@@ -77,6 +80,16 @@ export class HomePage {
     }
   }
 
+  showBin(i:number){
+    this.toDelete = i;
+    if(this.bin == false){
+      this.bin = true;
+    }
+    else{
+      this.bin = false;
+      this.toDelete = null;
+    }
+  }
   addNewTask(){
     let valid:boolean = true;
 
