@@ -36,15 +36,14 @@
           <ion-row *ngIf="i >= firstDisplayedIndex-1 && i <= lastDisplayedIndex-1 && toDelete != i" (click)="showBin(i)" class="content">
             <ion-col col-6>{{item['task_name']}}</ion-col>
             <ion-col col-3>{{item['priority']}}</ion-col>
-            <ion-col col-2><ion-checkbox [(ngModel)]="item['done']" name="item['task_name']"></ion-checkbox></ion-col>
-            <ion-col col-1><ion-icon name="ios-trash-outline" *ngIf="bin == true && toDelete == i"></ion-icon></ion-col>
+            <ion-col col-2><ion-checkbox [(ngModel)]="item['done']" name="item['task_name']" (ngModelChange)="updateList()"></ion-checkbox></ion-col>
           </ion-row>
 
             <ion-row *ngIf="i >= firstDisplayedIndex-1 && i <= lastDisplayedIndex-1 && toDelete == i" (click)="showBin(i)" class="highlight">
               <ion-col col-6>{{item['task_name']}}</ion-col>
               <ion-col col-3>{{item['priority']}}</ion-col>
-              <ion-col col-2><ion-checkbox [(ngModel)]="item['done']" name="item['task_name']"></ion-checkbox></ion-col>
-              <ion-col col-1><ion-icon name="ios-trash-outline" *ngIf="bin == true && toDelete == i"></ion-icon></ion-col>
+              <ion-col col-2><ion-checkbox [(ngModel)]="item['done']" name="item['task_name']" (ngModelChange)="updateList()"></ion-checkbox></ion-col>
+              <ion-col col-1><ion-icon name="ios-trash-outline" *ngIf="bin == true && toDelete == i" (click)="deleteTask(i)"></ion-icon></ion-col>
             </ion-row>
       </ng-container>
   </ion-grid>

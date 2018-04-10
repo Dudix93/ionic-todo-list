@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, ToastController, AlertController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-home',
@@ -26,14 +27,7 @@ export class HomePage {
     {'id':2, 'value':'High', 'name':'High'}
   ];
 
-  todo:Array<any> = [
-    {task_name:'task1',priority_value:1,priority:'Medium',done:false},
-    {task_name:'task2',priority_value:0,priority:'Low',done:true},
-    {task_name:'task3',priority_value:2,priority:'High',done:false},
-    {task_name:'task4',priority_value:0,priority:'Low',done:false},
-    {task_name:'task5',priority_value:0,priority:'Low',done:true},
-    {task_name:'task6',priority_value:2,priority:'High',done:false}
-  ];
+  todo:Array<any> = [];
     
   pagesList:Array<number> = [];
   
@@ -44,8 +38,22 @@ export class HomePage {
   currentPage:number = 1;
   pages:number = Math.ceil(this.todo.length/this.rowsPerPage);
 
-  constructor(public navCtrl: NavController,private toastCtrl:ToastController) {
-    for(let i=1;i<=this.pages;i++) this.pagesList.push(i);
+  constructor(public navCtrl: NavController,
+    private toastCtrl:ToastController,
+    private alertCtrl:AlertController,
+    private storage:Storage) {
+    this.storage.get('todo').then(list=>{
+      if(list == null || list == undefined){
+        this.todo = [
+          {task_name:'Example task1',priority_value:1,priority:'Medium',done:false},
+          {task_name:'Example task2',priority_value:0,priority:'Low',done:true},
+          {task_name:'Example task3',priority_value:2,priority:'High',done:false}
+        ];
+      }
+      else this.todo = list;
+      this.updatePages();
+      this.updateTasksRange();
+    });
   }
 
   updatePages(){
@@ -80,8 +88,8 @@ export class HomePage {
     }
   }
 
-  showBin(i:number){
-    this.toDelete = i;
+  showBin(index:number){
+    this.toDelete = index;
     if(this.bin == false){
       this.bin = true;
     }
@@ -90,6 +98,29 @@ export class HomePage {
       this.toDelete = null;
     }
   }
+
+  updateList(){
+    this.storage.set('todo',this.todo);
+  } 
+
+  deleteTask(index:number){
+    const alert = this.alertCtrl.create({
+      title: "Delete task?",
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            this.todo.splice(index,1);
+            this.updatePages();
+            this.updateTasksRange();
+            this.updateList();
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
   addNewTask(){
     let valid:boolean = true;
 
@@ -101,7 +132,7 @@ export class HomePage {
       this.showToast("Maximum task name should be 25 characters long.");
       valid = false;
     }
-    else if(this.todo.map(function(e) { return e.task_name; }).indexOf(this.new_task) != (-1)){
+    else if(this.todo.map(function(e) { return e.task_name.toUpperCase(); }).indexOf(this.new_task.toUpperCase()) != (-1)){
       this.showToast("Task is already on the list.");
       valid = false;
     }
@@ -110,12 +141,13 @@ export class HomePage {
       {'id':this.priorityList.length-1,
       'priority_value':this.priorityList.map(function(e) { return e.value; }).indexOf(this.selectedPriority),
       'priority':this.selectedPriority, 
-      'task_name':this.new_task, 
+      'task_name':this.new_task.charAt(0).toUpperCase() + this.new_task.slice(1), 
       'done':false}
       );
       this.updatePages();
       this.updateTasksRange();
       this.showToast("New task added to the list.");
+      this.updateList();
     }
   }
 
