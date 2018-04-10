@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -15,8 +15,7 @@ export class HomePage {
   rowsPerPageList:Array<any> = [
     {'id':0, 'value':5, 'name':'5'},
     {'id':1, 'value':10, 'name':'10'},
-    {'id':2, 'value':15, 'name':'15'},
-    {'id':2, 'value':2, 'name':'2'}
+    {'id':2, 'value':15, 'name':'15'}
   ];
 
   priorityList:Array<any> = [
@@ -42,12 +41,8 @@ export class HomePage {
   currentPage:number = 1;
   pages:number = Math.ceil(this.todo.length/this.rowsPerPage);
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController,private toastCtrl:ToastController) {
     for(let i=1;i<=this.pages;i++) this.pagesList.push(i);
-
-    this.todo.forEach(element => {
-      console.log(element);
-    });
   }
 
   updatePages(){
@@ -83,13 +78,32 @@ export class HomePage {
   }
 
   addNewTask(){
-    this.todo.push({'id':this.priorityList.length-1, 
-                    'priority_value':this.priorityList.map(function(e) { return e.value; }).indexOf(this.selectedPriority),
-                    'priority':this.selectedPriority, 
-                    'task_name':this.new_task, 
-                    'done':false});
-    this.updatePages();
-    this.updateTasksRange();
+    let valid:boolean = true;
+
+    if(!this.new_task.match(/^([0-9]|[A-Z])/gi)){
+      this.showToast("Empty or invalid task name.");
+      valid = false;
+    }
+    else if(this.new_task.length > 25){
+      this.showToast("Maximum task name should be 25 characters long.");
+      valid = false;
+    }
+    else if(this.todo.map(function(e) { return e.task_name; }).indexOf(this.new_task) != (-1)){
+      this.showToast("Task is already on the list.");
+      valid = false;
+    }
+    else if(valid == true){
+      this.todo.push(
+      {'id':this.priorityList.length-1,
+      'priority_value':this.priorityList.map(function(e) { return e.value; }).indexOf(this.selectedPriority),
+      'priority':this.selectedPriority, 
+      'task_name':this.new_task, 
+      'done':false}
+      );
+      this.updatePages();
+      this.updateTasksRange();
+      this.showToast("New task added to the list.");
+    }
   }
 
   compareValues(key, order='asc') {
@@ -122,5 +136,14 @@ export class HomePage {
       this.currentSorting = 'desc';
     }
     this.currentColSorted = key;
+  }
+
+  showToast(message:string) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
   }
 }
