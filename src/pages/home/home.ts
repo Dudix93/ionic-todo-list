@@ -8,7 +8,10 @@ import { NavController } from 'ionic-angular';
 export class HomePage {
   
   new_task:String = '';
+  currentSorting:String = '';
+  currentColSorted:String = '';
   selectedPriority:String = 'medium';
+  
   rowsPerPage:number = 5;
 
   rowsPerPageList:Array<any> = [
@@ -30,11 +33,42 @@ export class HomePage {
     {task_name:'task6',priority:'high',done:false}];
 
   constructor(public navCtrl: NavController) {
-
+  
   }
 
   addNewTask(){
-    console.log({'id':this.priorityList.length, 'value':this.selectedPriority, 'task_name':this.new_task});
     this.todo.push({'id':this.priorityList.length-1, 'priority':this.selectedPriority, 'task_name':this.new_task, 'done':false});
+  }
+
+  compareValues(key, order='asc') {
+    return function(a, b) {
+    
+      if(!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+          return 0; 
+      }
+  
+      const valueA = (typeof a[key] === 'string') ? a[key].toUpperCase() : a[key];
+      const valueB = (typeof b[key] === 'string') ? b[key].toUpperCase() : b[key];
+  
+      let comparison = 0;
+      if (valueA > valueB) {
+        comparison = 1;
+      } else if (valueA < valueB) {
+        comparison = -1;
+      }
+      return (order == 'desc') ? (comparison * -1) : comparison
+    };
+  }
+
+  sortList(key:string){
+    if(this.currentSorting == '' || this.currentSorting == 'desc'){
+      this.todo.sort(this.compareValues(key,'asc'));
+      this.currentSorting = 'asc';
+    }
+    else if(this.currentSorting == 'asc'){
+      this.todo.sort(this.compareValues(key,'desc'));
+      this.currentSorting = 'desc';
+    }
+    this.currentColSorted = key;
   }
 }

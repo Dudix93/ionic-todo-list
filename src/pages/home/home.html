@@ -9,10 +9,36 @@
 <ion-content padding>
   <ion-grid>
       <ion-row class="bar">
-        <ion-col col-4>Task name</ion-col>
-        <ion-col col-4>Priority</ion-col>
-        <ion-col col-4>Done</ion-col>
+        <ion-col col-4 *ngIf="(currentColSorted == '' && currentSorting == '') || (currentColSorted != 'task_name' && currentSorting != '')" (click)="sortList('task_name')">
+          Task name
+        </ion-col>
+        <ion-col class="sort" col-4 *ngIf="currentColSorted == 'task_name' && currentSorting == 'asc'" (click)="sortList('task_name')">
+          Task name <ion-icon name="md-trending-up"></ion-icon>
+        </ion-col>
+        <ion-col class="sort" col-4 *ngIf="currentColSorted == 'task_name' && currentSorting == 'desc'" (click)="sortList('task_name')">
+          Task name <ion-icon name="md-trending-down"></ion-icon>
+        </ion-col>
+
+        <ion-col col-4 *ngIf="(currentColSorted == '' && currentSorting == '') || (currentColSorted != 'priority' && currentSorting != '')" (click)="sortList('priority')">
+          Priority
+        </ion-col>
+        <ion-col class="sort" col-4 *ngIf="currentColSorted == 'priority' && currentSorting == 'asc'" (click)="sortList('priority')">
+          Priority <ion-icon name="md-trending-down"></ion-icon>
+        </ion-col>
+        <ion-col class="sort" col-4 *ngIf="currentColSorted == 'priority' && currentSorting == 'desc'" (click)="sortList('priority')">
+          Priority <ion-icon name="md-trending-up"></ion-icon>
+        </ion-col>
+
+        <ion-col col-4 *ngIf="(currentColSorted == '' && currentSorting == '') || (currentColSorted != 'done' && currentSorting != '')" (click)="sortList('done')">
+          Done</ion-col>
+        <ion-col class="sort" col-4 *ngIf="currentColSorted == 'done' && currentSorting == 'asc'" (click)="sortList('done')">
+          Done <ion-icon name="ios-create-outline"></ion-icon>
+        </ion-col>
+        <ion-col class="sort" col-4 *ngIf="currentColSorted == 'done' && currentSorting == 'desc'" (click)="sortList('done')">
+          Done <ion-icon name="ios-create"></ion-icon>
+        </ion-col>
       </ion-row>
+
       <ion-row *ngFor="let item of todo; let i = index" class="content">
         <ion-col col-4 *ngIf="i < rowsPerPage">{{item['task_name']}}</ion-col>
         <ion-col col-4 *ngIf="i < rowsPerPage">{{item['priority']}}</ion-col>
