@@ -5,30 +5,30 @@
           Task name
         </ion-col>
         <ion-col class="sort" col-6 *ngIf="currentColSorted == 'task_name' && currentSorting == 'asc'" (click)="sortList('task_name')">
-          Task name <ion-icon name="md-trending-up"></ion-icon>
+          Task name <ion-icon style="font-size:14px" name="md-trending-up"></ion-icon>
         </ion-col>
         <ion-col class="sort" col-6 *ngIf="currentColSorted == 'task_name' && currentSorting == 'desc'" (click)="sortList('task_name')">
-          Task name <ion-icon name="md-trending-down"></ion-icon>
+          Task name <ion-icon style="font-size:14px" name="md-trending-down"></ion-icon>
         </ion-col>
 
         <ion-col col-3 *ngIf="(currentColSorted == '' && currentSorting == '') || (currentColSorted != 'priority_value' && currentSorting != '')" (click)="sortList('priority_value')">
           Priority
         </ion-col>
         <ion-col class="sort" col-3 *ngIf="currentColSorted == 'priority_value' && currentSorting == 'asc'" (click)="sortList('priority_value')">
-          Priority <ion-icon name="md-trending-up"></ion-icon>
+          Priority <ion-icon style="font-size:14px" name="md-trending-up"></ion-icon>
         </ion-col>
         <ion-col class="sort" col-3 *ngIf="currentColSorted == 'priority_value' && currentSorting == 'desc'" (click)="sortList('priority_value')">
-          Priority <ion-icon name="md-trending-down"></ion-icon>
+          Priority <ion-icon style="font-size:14px" name="md-trending-down"></ion-icon>
         </ion-col>
 
         <ion-col col-3 *ngIf="(currentColSorted == '' && currentSorting == '') || (currentColSorted != 'done' && currentSorting != '')" (click)="sortList('done')">
           Done
         </ion-col>
         <ion-col class="sort" col-3 *ngIf="currentColSorted == 'done' && currentSorting == 'asc'" (click)="sortList('done')">
-          Done <ion-icon name="ios-create-outline"></ion-icon>
+          Done <ion-icon style="font-size:14px" name="ios-create-outline"></ion-icon>
         </ion-col>
         <ion-col class="sort" col-3 *ngIf="currentColSorted == 'done' && currentSorting == 'desc'" (click)="sortList('done')">
-          Done <ion-icon name="ios-create"></ion-icon>
+          Done <ion-icon style="font-size:14px" name="ios-create"></ion-icon>
         </ion-col>
       </ion-row>
 
@@ -52,7 +52,7 @@
     <ion-row align-items-center>
         <ion-col col-7>
           <ion-item no-lines>
-              <ion-label style="font-size:13px;" text-right>Rows per page</ion-label>
+              <ion-label style="font-size:12px;" text-right>Rows per page</ion-label>
               <ion-select [(ngModel)]="rowsPerPage" (ngModelChange)="updatePages()" interface="popover">
                 <ion-option *ngFor="let rpp of rowsPerPageList" value="{{rpp.value}}">{{rpp.name}}</ion-option>
               </ion-select>
