@@ -1,5 +1,5 @@
 <ion-content padding>
-  <ion-grid>
+  <ion-grid fixed>
       <ion-row class="bar">
         <ion-col col-6 *ngIf="(currentColSorted == '' && currentSorting == '') || (currentColSorted != 'task_name' && currentSorting != '')" (click)="sortList('task_name')">
           Task name
@@ -43,22 +43,22 @@
               <ion-col col-6>{{item['task_name']}}</ion-col>
               <ion-col col-3>{{item['priority']}}</ion-col>
               <ion-col col-2><ion-checkbox [(ngModel)]="item['done']" name="item['task_name']" (ngModelChange)="updateList()"></ion-checkbox></ion-col>
-              <ion-col col-1><ion-icon name="ios-trash-outline" *ngIf="bin == true && toDelete == i" (click)="deleteTask(i)"></ion-icon></ion-col>
+              <ion-col col-1><ion-icon name="ios-trash-outline" *ngIf="bin == true && toDelete == i" (click)="deleteTask(i,item['task_name'])"></ion-icon></ion-col>
             </ion-row>
       </ng-container>
   </ion-grid>
 
-  <ion-grid>
+  <ion-grid fixed>
     <ion-row align-items-center>
-        <ion-col col-1></ion-col>
-        <ion-col col-6>
+        <ion-col col-7>
           <ion-item no-lines>
-              <ion-label text-right>Rows per page</ion-label>
-              <ion-select [(ngModel)]="rowsPerPage" (ngModelChange)="updatePages()">
+              <ion-label style="font-size:13px;" text-right>Rows per page</ion-label>
+              <ion-select [(ngModel)]="rowsPerPage" (ngModelChange)="updatePages()" interface="popover">
                 <ion-option *ngFor="let rpp of rowsPerPageList" value="{{rpp.value}}">{{rpp.name}}</ion-option>
               </ion-select>
           </ion-item>
         </ion-col>
+
         <ion-col col-3 text-right>
             {{firstDisplayedIndex}} - {{lastDisplayedIndex}} of {{todo.length}}
         </ion-col>
@@ -72,26 +72,28 @@
             <ion-icon name="ios-arrow-forward" *ngIf="currentPage == pages" disabled></ion-icon>
             <ion-icon name="ios-arrow-forward" *ngIf="currentPage != pages" (click)="nextPage()"></ion-icon>
         </ion-col>
-        
     </ion-row>
 
     <ion-row align-items-center>
-        <ion-col col-6>
+        <ion-col col-8>
           <ion-item>
               <ion-label floating>Add new task</ion-label>
               <ion-input type="text" name="newTask" [(ngModel)]="new_task" clearInput></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col col-6>
+        <ion-col col-4>
           <ion-item>
               <ion-label floating>Priority</ion-label>
-              <ion-select [(ngModel)]="selectedPriority">
+              <ion-select [(ngModel)]="selectedPriority" interface="popover">
                 <ion-option *ngFor="let pr of priorityList" value="{{pr.value}}">{{pr.name}}</ion-option>
               </ion-select>
           </ion-item>
         </ion-col>
     </ion-row>
+
+    <ion-row>
+      <ion-col col-3><button ion-button (click)="addNewTask()">Add task</button></ion-col>
+    </ion-row>
   </ion-grid>
   
-  <button ion-button (click)="addNewTask()">Add task</button>
 </ion-content>

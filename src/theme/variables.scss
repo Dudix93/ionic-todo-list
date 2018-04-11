@@ -43,6 +43,11 @@ $colors: (
 
 $checkbox-md-icon-background-color-on:#e99e3b;
 $checkbox-md-icon-border-color-on:#e99e3b;
+
+$grid-max-widths: (
+  lg: 720px,
+  xl: 720px
+) !default;
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here

@@ -45,9 +45,12 @@ export class HomePage {
     this.storage.get('todo').then(list=>{
       if(list == null || list == undefined){
         this.todo = [
-          {task_name:'Example task1',priority_value:1,priority:'Medium',done:false},
-          {task_name:'Example task2',priority_value:0,priority:'Low',done:true},
-          {task_name:'Example task3',priority_value:2,priority:'High',done:false}
+          {task_name:'Take out the trash',priority_value:1,priority:'Medium',done:false},
+          {task_name:'Job interview',priority_value:0,priority:'Low',done:true},
+          {task_name:'Meeting with Anna',priority_value:0,priority:'High',done:false},
+          {task_name:'Feed the dog',priority_value:0,priority:'Medium',done:false},
+          {task_name:'Do the homework',priority_value:0,priority:'Low',done:true},
+          {task_name:'Buy milk',priority_value:2,priority:'High',done:false}
         ];
       }
       else this.todo = list;
@@ -103,9 +106,9 @@ export class HomePage {
     this.storage.set('todo',this.todo);
   } 
 
-  deleteTask(index:number){
+  deleteTask(index:number,task_name:String){
     const alert = this.alertCtrl.create({
-      title: "Delete task?",
+      title: "Delete task?<br><br>"+task_name,
       buttons: [
         {
           text: 'Ok',
@@ -128,8 +131,8 @@ export class HomePage {
       this.showToast("Empty or invalid task name.");
       valid = false;
     }
-    else if(this.new_task.length > 25){
-      this.showToast("Maximum task name should be 25 characters long.");
+    else if(this.new_task.length > 20){
+      this.showToast("Maximum task name should be 20 characters long.");
       valid = false;
     }
     else if(this.todo.map(function(e) { return e.task_name.toUpperCase(); }).indexOf(this.new_task.toUpperCase()) != (-1)){
