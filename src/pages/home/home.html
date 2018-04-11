@@ -1,5 +1,8 @@
 <ion-content padding>
-  <ion-grid fixed>
+
+  <ion-item *ngIf="todo.length == 0" text-center>Task list is empty.</ion-item>
+
+  <ion-grid *ngIf="todo.length > 0" fixed>
       <ion-row class="bar">
         <ion-col col-6 *ngIf="(currentColSorted == '' && currentSorting == '') || (currentColSorted != 'task_name' && currentSorting != '')" (click)="sortList('task_name')">
           Task name
@@ -49,7 +52,7 @@
   </ion-grid>
 
   <ion-grid fixed>
-    <ion-row align-items-center>
+    <ion-row *ngIf="todo.length > 0" align-items-center>
         <ion-col col-7>
           <ion-item no-lines>
               <ion-label style="font-size:12px;" text-right>Rows per page</ion-label>
