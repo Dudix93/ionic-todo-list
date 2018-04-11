@@ -42,6 +42,7 @@ export class HomePage {
     private toastCtrl:ToastController,
     private alertCtrl:AlertController,
     private storage:Storage) {
+
     this.storage.get('todo').then(list=>{
       if(list == null || list == undefined){
         this.todo = [
@@ -51,14 +52,11 @@ export class HomePage {
           {task_name:'Feed the dog',priority_value:2,priority:'Medium',done:false},
           {task_name:'Do the homework',priority_value:0,priority:'Low',done:true},
           {task_name:'Buy milk',priority_value:3,priority:'High',done:false},
-          {task_name:'Take out the trash',priority_value:1,priority:'Medium',done:false},
-          {task_name:'Job interview',priority_value:0,priority:'Low',done:true},
-          {task_name:'Meeting with Anna',priority_value:3,priority:'High',done:false},
-          {task_name:'Feed the dog',priority_value:2,priority:'Medium',done:false},
-          {task_name:'Do the homework',priority_value:0,priority:'Low',done:true},
-          {task_name:'Buy milk',priority_value:3,priority:'High',done:false},
-          {task_name:'Take out the trash',priority_value:1,priority:'Medium',done:false},
-          {task_name:'Job interview',priority_value:0,priority:'Low',done:true}
+          {task_name:'Do the dishes',priority_value:1,priority:'Medium',done:false},
+          {task_name:'Fuel the car',priority_value:0,priority:'Low',done:true},
+          {task_name:'Read a book',priority_value:3,priority:'High',done:false},
+          {task_name:'Fix PC',priority_value:2,priority:'Medium',done:false},
+          {task_name:'Go to sleep',priority_value:0,priority:'Low',done:true}
         ];
       }
       else this.todo = list;

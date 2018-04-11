@@ -17,10 +17,22 @@ page-home {
         border-width: 1px;
     }
 
-    .content{
+    .bin{
+        display:none;
+    }
+
+    .list-elements{
         border-color:gray;
         border-style: solid;
         border-width: 1px;
+    }
+
+    .list-elements:hover{
+        background-color: #f0ebe9;
+    }
+
+    .list-elements:hover .bin{
+        display:inline !important;
     }
 
     .col{
