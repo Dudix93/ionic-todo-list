@@ -62,8 +62,11 @@
           </ion-item>
         </ion-col>
 
-        <ion-col col-3 text-right>
+        <ion-col *ngIf="firstDisplayedIndex != lastDisplayedIndex" col-3 text-right>
             {{firstDisplayedIndex}} - {{lastDisplayedIndex}} of {{todo.length}}
+        </ion-col>
+        <ion-col *ngIf="firstDisplayedIndex == lastDisplayedIndex" col-3 text-right>
+            {{firstDisplayedIndex}} of {{todo.length}}
         </ion-col>
 
         <ion-col col-1>

@@ -50,7 +50,15 @@ export class HomePage {
           {task_name:'Meeting with Anna',priority_value:3,priority:'High',done:false},
           {task_name:'Feed the dog',priority_value:2,priority:'Medium',done:false},
           {task_name:'Do the homework',priority_value:0,priority:'Low',done:true},
-          {task_name:'Buy milk',priority_value:3,priority:'High',done:false}
+          {task_name:'Buy milk',priority_value:3,priority:'High',done:false},
+          {task_name:'Take out the trash',priority_value:1,priority:'Medium',done:false},
+          {task_name:'Job interview',priority_value:0,priority:'Low',done:true},
+          {task_name:'Meeting with Anna',priority_value:3,priority:'High',done:false},
+          {task_name:'Feed the dog',priority_value:2,priority:'Medium',done:false},
+          {task_name:'Do the homework',priority_value:0,priority:'Low',done:true},
+          {task_name:'Buy milk',priority_value:3,priority:'High',done:false},
+          {task_name:'Take out the trash',priority_value:1,priority:'Medium',done:false},
+          {task_name:'Job interview',priority_value:0,priority:'Low',done:true}
         ];
       }
       else this.todo = list;
