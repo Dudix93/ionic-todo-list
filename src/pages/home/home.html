@@ -78,13 +78,15 @@
     </ion-row>
 
     <ion-row align-items-center>
-        <ion-col col-8>
+        <ion-col col-7>
           <ion-item>
-              <ion-label floating>Add new task</ion-label>
+              <ion-label *ngIf="new_task.length == 0" floating>Add new task</ion-label>
+              <ion-label *ngIf="new_task.length > 0 && new_task.length <= 20" floating>{{new_task.length}}/20</ion-label>
+              <ion-label *ngIf="new_task.length > 20" color="danger" floating>To long task name</ion-label>
               <ion-input type="text" name="newTask" [(ngModel)]="new_task" clearInput></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col col-4>
+        <ion-col col-5>
           <ion-item>
               <ion-label floating>Priority</ion-label>
               <ion-select [(ngModel)]="selectedPriority" interface="popover">
