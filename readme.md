@@ -1,5 +1,16 @@
-### Running the project
+## To-do list
 
+![](screenshots/1.png)
+
+![](screenshots/2.png)
+
+![](screenshots/3.png)
+
+![](screenshots/4.png)
+
+![](screenshots/5.png)
+
+## Running the project
 To run the app on an android device, download and install *todo-list.apk* file. Make sure You allowed for installation of apps from unknown sources in Your mobile device's settings.
 
 To run the app on desktop:
